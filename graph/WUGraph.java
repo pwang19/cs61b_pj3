@@ -3,6 +3,7 @@
 package graph;
 
 import list.*;
+import dict.*;
 
 /**
  * The WUGraph class represents a weighted, undirected graph. Self-edges are
@@ -10,7 +11,9 @@ import list.*;
  */
 
 public class WUGraph {
-	DList vertices;
+	private DList vertices;
+	private HashTableChained edgeHash;
+	private HashTableChained vertexHash;
 
 	/**
 	 * WUGraph() constructs a graph having no vertices or edges.
@@ -36,7 +39,7 @@ public class WUGraph {
 	 * Running time: O(1).
 	 */
 	public int edgeCount() {
-		return 0;
+		return edgeHash.size();
 	}
 
 	/**
@@ -72,7 +75,9 @@ public class WUGraph {
 	 * Running time: O(1).
 	 */
 	public void addVertex(Object vertex) {
-		vertex.hashCode();
+		if (!isVertex(vertex)) {
+			vertexHash.insert(vertex, vertex);
+		}
 	}
 
 	/**
@@ -93,6 +98,13 @@ public class WUGraph {
 	 * Running time: O(1).
 	 */
 	public boolean isVertex(Object vertex) {
+		try {
+			return vertexHash.find(vertex) != null;
+		} catch (InvalidKeyException e) {
+			System.out.println("shoot me now.");
+		} catch (InvalidNodeException e) {
+			System.out.println("bang.");
+		}
 		return false;
 	}
 
@@ -181,9 +193,9 @@ public class WUGraph {
 	public int weight(Object u, Object v) {
 		return 0;
 	}
-	
+
 	public static void main(String[] args) {
-		
+
 	}
 
 }
