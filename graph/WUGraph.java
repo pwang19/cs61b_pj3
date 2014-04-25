@@ -76,7 +76,8 @@ public class WUGraph {
 	 */
 	public void addVertex(Object vertex) {
 		if (!isVertex(vertex)) {
-			vertexHash.insert(vertex, vertex);
+			vertices.insertBack(new DList());
+			vertexHash.insert(vertex, vertexCount());
 		}
 	}
 
@@ -88,7 +89,15 @@ public class WUGraph {
 	 * Running time: O(d), where d is the degree of "vertex".
 	 */
 	public void removeVertex(Object vertex) {
-
+		if(isVertex(vertex)) {
+//			try {
+//				
+//			} catch (InvalidKeyException e) {
+//				e.printStackTrace();
+//			} catch (InvalidNodeException e) {
+//				e.printStackTrace();
+//			}
+		}
 	}
 
 	/**
@@ -116,7 +125,37 @@ public class WUGraph {
 	 * Running time: O(1).
 	 */
 	public int degree(Object vertex) {
+		// currently runs in O(n) time
+		
+		try {
+			// find the adjacency list associated with this vertex.
+			DList list = findAdjList(vertex);
+			
+			// returns the length of the DList at the node,
+			// which is the degree of the node.
+			return list.length();
+			
+		} catch (InvalidKeyException e) {
+			e.printStackTrace();
+		} catch (InvalidNodeException e) {
+			e.printStackTrace();
+		}
+		
 		return 0;
+	}
+	
+	private DList findAdjList(Object vertex) throws InvalidKeyException, InvalidNodeException {
+		// find the index of the vertex in the DList.
+		int index = (Integer) vertexHash.find(vertex).value();
+		
+		// find the node that corresponds to the vertex.
+		DListNode node = (DListNode) vertices.front();
+		while(index > 0) {
+			node = (DListNode) node.next();
+			index--;
+		}
+		
+		return (DList) node.item();
 	}
 
 	/**
@@ -138,7 +177,9 @@ public class WUGraph {
 	 * Running time: O(d), where d is the degree of "vertex".
 	 */
 	public Neighbors getNeighbors(Object vertex) {
-		return null;
+		Neighbors n = new Neighbors();
+//		n.neighborList = new Object[];
+		return n;
 	}
 
 	/**
