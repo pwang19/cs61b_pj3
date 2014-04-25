@@ -216,7 +216,12 @@ public class WUGraph {
 	 * Running time: O(1).
 	 */
 	public void addEdge(Object u, Object v, int weight) {
-
+		VertexPair updated = new VertexPair(u, v);
+		findVertexNode(u).item.insertBack(updated.hashCode());
+		edgeHash.insert(updated.hashCode(), findVertexNode(u).item.back);
+		findVertexNode(v).item.insertBack(updated.hashCode());
+		findVertexNode(u).item.back.item = findVertexNode(v).item.back;
+		findVertexNode(v).item.back.item = findVertexNode(u).item.back;
 	}
 
 	/**
