@@ -51,7 +51,7 @@ public class HashTableChained implements Dictionary {
 	 **/
 
 	protected int compFunction(int code) {
-		return (127 * code + 73) % 16908799 % table.length;
+		return Math.abs((127 * code + 73) % 16908799 % table.length);
 	}
 
 	/**
