@@ -92,9 +92,16 @@ public class WUGraph {
 		if (isVertex(vertex)) {
 			try {
 				DListNode node = findVertexNode(vertex);
+				DList list = (DList) node.item();
+				DListNode lNode = (DListNode) list.front();
 				
 				// remove partner references on all nodes
 				// in the adjacency list
+				while (lNode.isValidNode()){
+					DListNode partner = (DListNode) lNode.item();
+					partner.setItem(null);
+					lNode = (DListNode) lNode.next();
+				}
 				
 				// remove this vertex
 				vertexHash.remove(vertex);
