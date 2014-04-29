@@ -259,8 +259,8 @@ public class WUGraph {
 				// check if the edge exists
 				if (isEdge(u, v)) {
 					DDListNode updated = findEdgeNode(u, v);
-					updated.item.item2 = weight;
-					updated.item2 = weight;
+					updated.item.item2() = weight;
+					updated.item2() = weight;
 
 					// DDListNode temp = (DDListNode) vertex.front();
 					// while (temp.isValidNode()) {
@@ -302,14 +302,10 @@ public class WUGraph {
 			if (isVertex(u) && isVertex(v) && isEdge(u, v)) {
 				DDListNode node = findEdgeNode(u, v);
 
-				// remove partner reference
-
-//				node.item().remove();
-				// remove node if it is not already removed
-//				if (node.isValidNode() {
-//					node.remove();
-//				}
-				// remove from hashtable
+				node.item.remove();
+				if (node.isValidNode()) {
+					node.remove();
+				}
 				edgeHash.remove(node);
 			}
 		} catch (InvalidKeyException e) {
