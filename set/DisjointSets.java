@@ -42,10 +42,10 @@ public class DisjointSets {
    **/
   public void union(int root1, int root2) {
     if(array[root1] > 0 || array[root2] > 0){
-      return "Trying to merge non-roots";
+      System.out.println("Trying to merge non-roots");
     }
     if(root1 == root2){
-      return "attempting to merge same root";
+      System.out.println("attempting to merge same root");
     }
     if (array[root2] < array[root1]) {                 // root2 has larger tree
       array[root2] += array[root1];        // update # of items in root2's tree

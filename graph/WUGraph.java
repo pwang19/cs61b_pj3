@@ -11,7 +11,7 @@ import dict.*;
  */
 
 public class WUGraph {
-	private DList vertices; // vertices are objects of any kind
+	private DDList vertices; // vertices are objects of any kind
 	private HashTableChained edgeHash;
 
 	/**
@@ -25,7 +25,7 @@ public class WUGraph {
 	 * Running time: O(1).
 	 */
 	public WUGraph() {
-		vertices = new DList();
+		vertices = new DDList();
 		edgeHash = new HashTableChained();
 		vertexHash = new HashTableChained();
 
@@ -62,11 +62,13 @@ public class WUGraph {
 	 */
 	public Object[] getVertices() {
 		Object[] allVertices = new Object[vertexCount()];
-		DListNode vertex = (DListNode) vertices.front();
+		int index = 0;
 		try {
-			for (int index = 0; index < allVertices.length; index++) {
+			DDListNode vertex = (DDListNode) vertices.front();
+			while (vertex.isValidNode()) {
 				allVertices[index] = vertex.item();
-				vertex = (DListNode) vertex.next();
+				vertex = (DDListNode) vertex.next();
+				index++;
 			}
 		} catch (InvalidNodeException e) {
 			e.printStackTrace();
@@ -84,7 +86,7 @@ public class WUGraph {
 	public void addVertex(Object vertex) {
 		if (!isVertex(vertex)) {
 			DDList newList = new DDList();
-			vertices.insertBack(newList);
+			vertices.insertBack(vertex, newList);
 			vertexHash.insert(vertex, vertices.back());
 		}
 	}
@@ -99,9 +101,9 @@ public class WUGraph {
 	public void removeVertex(Object vertex) {
 		if (isVertex(vertex)) {
 			try {
-				DListNode node = findVertexNode(vertex);
-				if (!((DDList) node.item()).isEmpty()) {
-					DDList list = (DDList) node.item();
+				DDListNode node = findVertexNode(vertex);
+				if (!((DDList) node.item2()).isEmpty()) {
+					DDList list = (DDList) node.item2();
 					DDListNode lNode = (DDListNode) list.front();
 
 					// remove partner references on all nodes
@@ -136,9 +138,8 @@ public class WUGraph {
 		} catch (InvalidKeyException e) {
 			return false;
 		} catch (InvalidNodeException e) {
-			e.printStackTrace();
+			return false;
 		}
-		return false;
 	}
 
 	/**
@@ -151,7 +152,7 @@ public class WUGraph {
 	public int degree(Object vertex) {
 		try {
 			// find the adjacency list associated with this vertex.
-			DDList list = (DDList) findVertexNode(vertex).item();
+			DDList list = (DDList) findVertexNode(vertex).item2();
 
 			// returns the length of the DList at the node,
 			// which is the degree of the node.
@@ -174,9 +175,9 @@ public class WUGraph {
 	 * @throws InvalidKeyException
 	 * @throws InvalidNodeException
 	 */
-	private DListNode findVertexNode(Object vertex) throws InvalidKeyException,
+	private DDListNode findVertexNode(Object vertex) throws InvalidKeyException,
 			InvalidNodeException {
-		return (DListNode) vertexHash.find(vertex).value();
+		return (DDListNode) vertexHash.find(vertex).value();
 	}
 
 	/**
@@ -302,11 +303,12 @@ public class WUGraph {
 				DDListNode node = findEdgeNode(u, v);
 
 				// remove partner reference
-				node.item.remove();
+
+//				node.item().remove();
 				// remove node if it is not already removed
-				if (node.isValidNode()) {
-					node.remove();
-				}
+//				if (node.isValidNode() {
+//					node.remove();
+//				}
 				// remove from hashtable
 				edgeHash.remove(node);
 			}
@@ -394,9 +396,9 @@ public class WUGraph {
 		graph.removeVertex("not a vertex");
 		System.out.println(graph.vertexCount());
 		System.out.println(graph.arrayToString(graph.getVertices()));
-		graph.addEdge("bob", 70, 5);
-
-		System.out.println(graph.arrayToString(graph.getVertices()));
+//		graph.addEdge("bob", 70, 5);
+//
+//		System.out.println(graph.arrayToString(graph.getVertices()));
 	}
 
 }
