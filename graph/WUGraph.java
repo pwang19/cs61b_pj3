@@ -299,11 +299,11 @@ public class WUGraph {
 				DDListNode node = findEdgeNode(u, v);
 
 				// remove partner reference
-				node.item().remove();
+//				node.item().remove();
 				// remove node if it is not already removed
-				if (node.isValidNode() {
-					node.remove();
-				}
+//				if (node.isValidNode() {
+//					node.remove();
+//				}
 				// remove from hashtable
 				edgeHash.remove(node);
 			}

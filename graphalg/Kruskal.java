@@ -2,6 +2,8 @@
 
 package graphalg;
 
+import list.LinkedQueue;
+import list.QueueEmptyException;
 import dict.HashTableChained;
 import graph.*;
 import set.*;
@@ -31,7 +33,7 @@ public class Kruskal {
     LinkedQueue list = new LinkedQueue(); // don't know size needed
     for(int i = 0; i < size; i++){
       Neighbors vert = getNeighbors(vertices[i]);
-      for(int k = 0; k < vert.length; k++){
+      for(int k = 0; k < vert.neighborList.length; k++){
         KruskalHelper temp = new KruskalHelper(vertices[i], vert.neighborList[k], vert.weightList[k]);
         list.enqueue(temp);
       }
@@ -54,10 +56,10 @@ public class Kruskal {
         int vertex2Root = cycleCheck.find(vertex2);
         if(vertex1Root != vertex2Root){
           cycleCheck.union(vertex1, vertex2);
-          t.addedge(temp.getVertex1(), temp.getVertex2(), temp.getWeight());
+          t.addEdge(temp.getVertex1(), temp.getVertex2(), temp.getWeight());
         } 
       }
-    }catch(QueEmptyException e){
+    }catch(QueueEmptyException e){
       System.out.println("Wrong queue. minSpanTree");
     }
     return t;
@@ -73,7 +75,7 @@ public class Kruskal {
       return;
     }
     
-    int choose = (int) (Math.random() * q.size);
+    int choose = (int) (Math.random() * q.size());
     Comparable item = (Comparable) q.nth(choose + 1);
     LinkedQueue qLarge = new LinkedQueue();
     LinkedQueue qEquals = new LinkedQueue();
@@ -115,7 +117,7 @@ public class Kruskal {
           qEquals.enqueue(nextQue);
         }
       }
-    }catch(QueEmptyException e){
+    }catch(QueueEmptyException e){
       System.out.println("Wrong queue. partition");
     }
   }

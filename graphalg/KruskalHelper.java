@@ -5,7 +5,7 @@ package graphalg;
 import graph.*;
 import set.*;
 
-public class KruskalHelper extends Comparable{
+public class KruskalHelper implements Comparable{
 	private Object vertex1;
 	private Object vertex2;
 	private int weight;
@@ -17,7 +17,8 @@ public class KruskalHelper extends Comparable{
    * @param g The weighted, undirected graph whose MST we want to compute.
    * @return A newly constructed WUGraph representing the MST of g.
    */
-	public KruskalHelper();
+	public KruskalHelper() {
+	}
 
 	/**
 	* kruskalHelper() constructs a KruskalHelper that contains two vertices and its connecting edges.
