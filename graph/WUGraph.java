@@ -151,7 +151,7 @@ public class WUGraph {
 	public int degree(Object vertex) {
 		try {
 			// find the adjacency list associated with this vertex.
-			DList list = (DList) findVertexNode(vertex).item();
+			DDList list = (DDList) findVertexNode(vertex).item();
 
 			// returns the length of the DList at the node,
 			// which is the degree of the node.
@@ -325,7 +325,13 @@ public class WUGraph {
 		}
 		return 0;
 	}
-
+	
+	/**
+	 * arrayToString() converts an array to a readable string.
+	 * Usage: for debugging purposes.
+	 * @param arr
+	 * @return a string representation of arr
+	 */
 	public String arrayToString(Object[] arr) {
 		String s = "[";
 		for (Object o : arr) {
@@ -346,6 +352,9 @@ public class WUGraph {
 		graph.removeVertex("bob");
 		graph.removeVertex("not a vertex");
 		System.out.println(graph.vertexCount());
+		System.out.println(graph.arrayToString(graph.getVertices()));
+		graph.addEdge("bob", 70, 5);
+
 		System.out.println(graph.arrayToString(graph.getVertices()));
 	}
 
