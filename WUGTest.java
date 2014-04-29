@@ -211,6 +211,7 @@ public class WUGTest {
       getDeduction = 1;
     }
 
+    System.out.println("Deductions: " + (countDeduction + 2 * getDeduction + isVDeduction));
     System.out.println();
     return countDeduction + 2 * getDeduction + isVDeduction;
   }

@@ -2,6 +2,7 @@
 
 package graphalg;
 
+import dict.HashTableChained;
 import graph.*;
 import set.*;
 
