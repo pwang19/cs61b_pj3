@@ -180,13 +180,15 @@ public class WUGraph {
 	}
 
 	/**
-	 * findEdgeNode() finds the edge associated with the vertices indicated,
-	 * if it exists. Checks the edgeHash for the edge; will throw exception
-	 * if it is not found.
+	 * findEdgeNode() finds the edge associated with the vertices indicated, if
+	 * it exists. Checks the edgeHash for the edge; will throw exception if it
+	 * is not found.
 	 * 
-	 * @param u first vertex
-	 * @param v second vertex
-	 * @return 
+	 * @param u
+	 *            first vertex
+	 * @param v
+	 *            second vertex
+	 * @return
 	 * @throws InvalidNodeException
 	 * @throws InvalidKeyException
 	 */
@@ -216,11 +218,23 @@ public class WUGraph {
 	 */
 	public Neighbors getNeighbors(Object vertex) {
 		Neighbors n = new Neighbors();
-		// n.neighborList = new Object[];
-		// still add itself as a neighbor if it edges itself?
-		DList list = findVertexNode(vertex).front;
-		for (Object list; list.next != head; list.next)
-			n.neighborList.add(list);
+		try {
+			DDList list = (DDList) findVertexNode(vertex).item();
+			DDListNode node = (DDListNode) list.front();
+			n.neighborList = new Object[list.length()];
+			n.weightList = new int[list.length()];
+			int index = 0;
+			while (node.isValidNode()) {
+				n.neighborList[index] = node.item();
+				n.weightList[index] = (Integer) node.item2();
+				index++;
+				node = (DDListNode) node.next();
+			}
+		} catch (InvalidNodeException e) {
+			e.printStackTrace();
+		} catch (InvalidKeyException e) {
+			e.printStackTrace();
+		}
 		return n;
 	}
 
@@ -279,21 +293,31 @@ public class WUGraph {
 	 * Running time: O(1).
 	 */
 	public void removeEdge(Object u, Object v) {
-		if (isVertex(u)) && (isVertex(v)) && (isEdge(u, v)) {
-			DDListNode node = findEdgeNode(u, v);
-			// find out what the variables in DDListNode are!
-			// node.item returns first item / partner reference?
-			if (node.item() == node) {
-				// removes node if it references itself
-				node.remove;
-			} else {
-				// remove partner reference first then remove node
-				node.item().remove;
-				node.remove;
+		try {
+			if (isVertex(u) && isVertex(v) && isEdge(u, v)) {
+				DDListNode node;
+
+				node = findEdgeNode(u, v);
+
+				// find out what the variables in DDListNode are!
+				// node.item returns first item / partner reference?
+				if (node.item() == node) {
+					// removes node if it references itself
+					node.remove();
+				} else {
+					// remove partner reference first then remove node
+					((DListNode) node.item()).remove();
+					node.remove();
+				}
+				// remove from hashtable
+				edgeHash.remove(node);
 			}
-			// remove from hashtable
-			edgeHash.remove(node);
+		} catch (InvalidKeyException e) {
+			e.printStackTrace();
+		} catch (InvalidNodeException e) {
+			e.printStackTrace();
 		}
+
 	}
 
 	/**
@@ -343,10 +367,11 @@ public class WUGraph {
 		}
 		return 0;
 	}
-	
+
 	/**
-	 * arrayToString() converts an array to a readable string.
-	 * Usage: for debugging purposes.
+	 * arrayToString() converts an array to a readable string. Usage: for
+	 * debugging purposes.
+	 * 
 	 * @param arr
 	 * @return a string representation of arr
 	 */
