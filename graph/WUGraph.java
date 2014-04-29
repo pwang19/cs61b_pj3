@@ -295,18 +295,12 @@ public class WUGraph {
 	public void removeEdge(Object u, Object v) {
 		try {
 			if (isVertex(u) && isVertex(v) && isEdge(u, v)) {
-				DDListNode node;
+				DDListNode node = findEdgeNode(u, v);
 
-				node = findEdgeNode(u, v);
-
-				// find out what the variables in DDListNode are!
-				// node.item returns first item / partner reference?
-				if (node.item() == node) {
-					// removes node if it references itself
-					node.remove();
-				} else {
-					// remove partner reference first then remove node
-					((DListNode) node.item()).remove();
+				// remove partner reference
+				node.item().remove();
+				// remove node if it is not already removed
+				if (node.isValidNode() {
 					node.remove();
 				}
 				// remove from hashtable
