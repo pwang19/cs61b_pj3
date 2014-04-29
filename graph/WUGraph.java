@@ -217,6 +217,10 @@ public class WUGraph {
 	public Neighbors getNeighbors(Object vertex) {
 		Neighbors n = new Neighbors();
 		// n.neighborList = new Object[];
+		// still add itself as a neighbor if it edges itself?
+		DList list = findVertexNode(vertex).front;
+		for (Object list; list.next != head; list.next)
+			n.neighborList.add(list);
 		return n;
 	}
 
@@ -275,7 +279,21 @@ public class WUGraph {
 	 * Running time: O(1).
 	 */
 	public void removeEdge(Object u, Object v) {
-
+		if (isVertex(u)) && (isVertex(v)) && (isEdge(u, v)) {
+			DDListNode node = findEdgeNode(u, v);
+			// find out what the variables in DDListNode are!
+			// node.item returns first item / partner reference?
+			if (node.item() == node) {
+				// removes node if it references itself
+				node.remove;
+			} else {
+				// remove partner reference first then remove node
+				node.item().remove;
+				node.remove;
+			}
+			// remove from hashtable
+			edgeHash.remove(node);
+		}
 	}
 
 	/**
