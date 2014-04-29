@@ -13,7 +13,7 @@ import dict.*;
 public class WUGraph {
 	private DList vertices; // vertices are objects of any kind
 	private HashTableChained edgeHash;
-	
+
 	/**
 	 * key is the vertex name, value is the DListNode of 'vertices'
 	 */
@@ -83,9 +83,9 @@ public class WUGraph {
 	 */
 	public void addVertex(Object vertex) {
 		if (!isVertex(vertex)) {
-			DList newList = new DList();
+			DDList newList = new DDList();
 			vertices.insertBack(newList);
-			vertexHash.insert(vertex, newList.back());
+			vertexHash.insert(vertex, vertices.back());
 		}
 	}
 
@@ -100,16 +100,16 @@ public class WUGraph {
 		if (isVertex(vertex)) {
 			try {
 				DListNode node = findVertexNode(vertex);
-				if (!((DList) node.item()).isEmpty()) {
-					DList list = (DList) node.item();
-					DListNode lNode = (DListNode) list.front();
+				if (!((DDList) node.item()).isEmpty()) {
+					DDList list = (DDList) node.item();
+					DDListNode lNode = (DDListNode) list.front();
 
 					// remove partner references on all nodes
 					// in the adjacency list
 					while (lNode.isValidNode()) {
-						DListNode partner = (DListNode) lNode.item();
+						DDListNode partner = (DDListNode) lNode.item();
 						partner.setItem(null);
-						lNode = (DListNode) lNode.next();
+						lNode = (DDListNode) lNode.next();
 					}
 				}
 				// remove this vertex
@@ -180,6 +180,23 @@ public class WUGraph {
 	}
 
 	/**
+	 * findEdgeNode() finds the edge associated with the vertices indicated,
+	 * if it exists. Checks the edgeHash for the edge; will throw exception
+	 * if it is not found.
+	 * 
+	 * @param u first vertex
+	 * @param v second vertex
+	 * @return 
+	 * @throws InvalidNodeException
+	 * @throws InvalidKeyException
+	 */
+	private DDListNode findEdgeNode(Object u, Object v)
+			throws InvalidKeyException, InvalidNodeException {
+		VertexPair vp = new VertexPair(u, v);
+		return (DDListNode) edgeHash.find(vp).value();
+	}
+
+	/**
 	 * getNeighbors() returns a new Neighbors object referencing two arrays. The
 	 * Neighbors.neighborList array contains each object that is connected to
 	 * the input object by an edge. The Neighbors.weightList array contains the
@@ -213,12 +230,41 @@ public class WUGraph {
 	 * Running time: O(1).
 	 */
 	public void addEdge(Object u, Object v, int weight) {
-		VertexPair updated = new VertexPair(u, v);
-		findVertexNode(u).item.insertBack(updated.hashCode());
-		edgeHash.insert(updated.hashCode(), findVertexNode(u).item.back);
-		findVertexNode(v).item.insertBack(updated.hashCode());
-		findVertexNode(u).item.back.item = findVertexNode(v).item.back;
-		findVertexNode(v).item.back.item = findVertexNode(u).item.back;
+		if (isVertex(u) && isVertex(v)) {
+			try {
+				VertexPair newEdge = new VertexPair(u, v);
+				DDList vertex = (DDList) findVertexNode(u).item();
+				VertexPair otherNewEdge = new VertexPair(v, u);
+				DDList vertex2 = (DDList) findVertexNode(v).item();
+
+				// check if the edge exists
+				if (isEdge(u, v)) {
+					// DDListNode temp = (DDListNode) vertex.front();
+					// while (temp.isValidNode()) {
+					// if(temp.equals()) {
+					//
+					// }
+					// }
+				} else {
+					// if the vertices are referencing the same thing,
+					// assign partner reference as itself.
+					if (u == v) {
+
+						// the first parameter is partner reference
+						vertex.insertBack(newEdge, weight);
+					} else { // insert the edge in the other vertex.
+						vertex.insertBack(otherNewEdge, weight);
+						vertex2.insertBack(newEdge, weight);
+					}
+
+					edgeHash.insert(newEdge, vertex.back());
+				}
+			} catch (InvalidKeyException e) {
+				e.printStackTrace();
+			} catch (InvalidNodeException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	/**
@@ -240,6 +286,15 @@ public class WUGraph {
 	 * Running time: O(1).
 	 */
 	public boolean isEdge(Object u, Object v) {
+
+		try {
+			findEdgeNode(u, v);
+			return true;
+		} catch (InvalidKeyException e) {
+			return false;
+		} catch (InvalidNodeException e) {
+			e.printStackTrace();
+		}
 		return false;
 	}
 
@@ -258,17 +313,40 @@ public class WUGraph {
 	 * Running time: O(1).
 	 */
 	public int weight(Object u, Object v) {
+		if (isEdge(u, v)) {
+			try {
+				DDListNode edge = findEdgeNode(u, v);
+				return (Integer) edge.item2();
+			} catch (InvalidKeyException e) {
+				e.printStackTrace();
+			} catch (InvalidNodeException e) {
+				e.printStackTrace();
+			}
+		}
 		return 0;
+	}
+
+	public String arrayToString(Object[] arr) {
+		String s = "[";
+		for (Object o : arr) {
+			s += o.toString() + ", ";
+		}
+		s += "]";
+		return s;
 	}
 
 	public static void main(String[] args) {
 		WUGraph graph = new WUGraph();
 		graph.addVertex("bob");
-		graph.addVertex(50);
+		graph.addVertex(70);
 		graph.addVertex(false);
 		graph.addVertex("not a vertex");
+		System.out.println(graph.vertexCount());
+		System.out.println(graph.arrayToString(graph.getVertices()));
 		graph.removeVertex("bob");
 		graph.removeVertex("not a vertex");
+		System.out.println(graph.vertexCount());
+		System.out.println(graph.arrayToString(graph.getVertices()));
 	}
 
 }
