@@ -45,7 +45,7 @@ public class Kruskal {
   		}
   	}
   	
-    // Sort the list using quicksort to achieve  O(|E|log(|E|)) 
+    // Sort the list using mergesort to achieve  O(|E|log(|E|)) 
   	mergeSort(list);
 
     // Use HashTableChained to map objects that serve as Vertices to unique integers
@@ -58,7 +58,7 @@ public class Kruskal {
     // Use DisjointSets to make sure no cycle 
   	DisjointSets cycleCheck = new DisjointSets(size);
 
-    
+    // get vertex values in hash and find its root in disjointset to check if two vertices have same root. If not the same root, add edge and union the two vertices.
     try{
     	while(!list.isEmpty()){
     		KruskalHelper temp = (KruskalHelper) list.dequeue();

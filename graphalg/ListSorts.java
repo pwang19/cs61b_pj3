@@ -18,7 +18,7 @@ public class ListSorts {
     LinkedQueue queofque = new LinkedQueue();
     try{
       while(!q.isEmpty()){
-        Comparable item = (Comparable) q.dequeue();
+        KruskalHelper item = (KruskalHelper) q.dequeue();
         LinkedQueue que = new LinkedQueue();
         que.enqueue(item);
         queofque.enqueue(que);
@@ -45,9 +45,7 @@ public class ListSorts {
     LinkedQueue q3 = new LinkedQueue();
     try{
       while(!q1.isEmpty() || !q2.isEmpty()){
-        Comparable itemq1 = (Comparable) q1.front();
-        Comparable itemq2 = (Comparable) q2.front();
-        int comparison = itemq1.compareTo(item.q2)
+        int comparison = ((KruskalHelper)q1.front()).getWeight() - ((KruskalHelper)q2.front()).getWeight()
         if(comparison>0){
           q3.enqueue(itemq2);
           q2.dequeue();
@@ -67,7 +65,6 @@ public class ListSorts {
     return q3;
   }
 
-  
   /**
    *  mergeSort() sorts q from smallest to largest using mergesort.
    *  @param q is a LinkedQueue of Comparable objects.
@@ -78,11 +75,11 @@ public class ListSorts {
     try{
       while(mergeQueofQue.size() > 1){
         LinkedQueue q1 = (LinkedQueue) mergeQueofQue.dequeue();
-        LinkedQueue q2 = (LinkedQueue) mergeQueofQue.dequeue();
+        LinkedQueue q2 = (LinkedQueue) mergeQueofQue.dequeue();x
         LinkedQueue q3 = mergeSortedQueues(q1, q2);
-        q1.enqueue(q3);
+        mergeQueofQue.enqueue(q3);
       }
-      q.append()
+      q.append((LinkedQueue) mergeQueofQue.dequeue())
     }catch(QueEmptyException e){
       System.out.println("Wrong queue. merge");
     }
