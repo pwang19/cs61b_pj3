@@ -33,7 +33,7 @@ public class Kruskal {
   		t.addVertex(vertices[i]);
   	}
 
-    // don't know size needed so use LinkedQueue
+    // Use LinkedQueue so we can sort using sorting algorithms from hw.
   	LinkedQueue list = new LinkedQueue();
 
     // Store all edges from g into a LinkedQueue using getNeighbors()
