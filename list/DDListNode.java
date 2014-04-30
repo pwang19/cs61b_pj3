@@ -40,7 +40,7 @@ public class DDListNode extends DListNode {
 		if (!isValidNode()) {
 			throw new InvalidNodeException();
 		}
-		this.item = item;
+		this.item2 = item;
 	}
 
 }
