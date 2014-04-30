@@ -110,8 +110,12 @@ public class WUGraph {
 					// remove partner references on all nodes
 					// in the adjacency list
 					while (lNode.isValidNode()) {
-						DDListNode partner = (DDListNode) lNode.item();
-						partner.setItem(null);
+						if(lNode.item() != lNode) {
+							((DDListNode) lNode.item()).remove();
+						}
+						Object vertex2 = ((Object[]) lNode.item())[1];
+						VertexPair vp = new VertexPair(vertex, vertex2);
+						edgeHash.remove(vp);
 						lNode = (DDListNode) lNode.next();
 					}
 				}
@@ -267,21 +271,39 @@ public class WUGraph {
 					
 					VertexPair newEdge = new VertexPair(u, v);
 					DDList vertex = (DDList) findVertexNode(u).item2();
-					VertexPair otherNewEdge = new VertexPair(v, u);
-					DDList vertex2 = (DDList) findVertexNode(v).item2();
 					
 					// if the vertices are referencing the same thing,
 					// assign partner reference as itself.
 					if (u == v) {
-
+						
 						// the first parameter is partner reference
-						vertex.insertBack(newEdge, weight);
-						vertex.back().setItem(vertex.back());
+						vertex.insertBack(null, weight);
+						
+						Object[] partner = new Object[2];
+						partner[0] = vertex.back();
+						partner[1] = v;
+						
+						vertex.back().setItem(partner);
+						
+						
 					} else { // insert the edge in the other vertex.
-						vertex.insertBack(otherNewEdge, weight);
-						vertex2.insertBack(newEdge, weight);
-						vertex.back().setItem(vertex2.back());
-						vertex2.back().setItem(vertex.back());
+						DDList vertex2 = (DDList) findVertexNode(v).item2();
+						
+
+						
+						vertex.insertBack(null, weight);
+						vertex2.insertBack(null, weight);
+						
+						Object[] partner = new Object[2];
+						partner[0] = vertex.back();
+						partner[1] = v;
+						
+						Object[] partner2 = new Object[2];
+						partner[0] = vertex2.back();
+						partner[1] = u;
+						
+						vertex.back().setItem(partner2);
+						vertex2.back().setItem(partner);
 					}
 
 					edgeHash.insert(newEdge, vertex.back());
