@@ -109,15 +109,15 @@ public class WUGraph {
 					// remove partner references on all nodes
 					// in the adjacency list
 					while (lNode.isValidNode()) {
-
 						Object vertex2 = ((Object[]) lNode.item())[1];
-//						if (((Object[]) lNode.item())[0] != lNode) {
-							((DDListNode) ((Object[]) lNode.item())[0])
-									.remove();
-//						}
-						VertexPair vp = new VertexPair(vertex, vertex2);
-						edgeHash.remove(vp);
 						lNode = (DDListNode) lNode.next();
+						removeEdge(vertex, vertex2);
+////						if (((Object[]) lNode.item())[0] != lNode) {
+//							((DDListNode) ((Object[]) lNode.item())[0])
+//									.remove();
+////						}
+//						VertexPair vp = new VertexPair(vertex, vertex2);
+//						edgeHash.remove(vp);
 					}
 				}
 				// remove this vertex
@@ -293,11 +293,11 @@ public class WUGraph {
 						vertex2.insertBack(null, weight);
 
 						Object[] partner = new Object[2];
-						partner[0] = vertex2.back();
+						partner[0] = vertex.back();
 						partner[1] = u;
 
 						Object[] partner2 = new Object[2];
-						partner[0] = vertex.back();
+						partner[0] = vertex2.back();
 						partner[1] = v;
 
 						vertex.back().setItem(partner);
