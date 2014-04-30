@@ -19,7 +19,6 @@ public class WUGraph {
 	 */
 	private HashTableChained vertexHash;
 
-
 	/**
 	 * WUGraph() constructs a graph having no vertices or edges.
 	 *
@@ -38,7 +37,7 @@ public class WUGraph {
 	 * Running time: O(1).
 	 */
 	public int vertexCount() {
-		 return vertices.length();
+		return vertices.length();
 	}
 
 	/**
@@ -47,7 +46,7 @@ public class WUGraph {
 	 * Running time: O(1).
 	 */
 	public int edgeCount() {
-		 return edgeHash.size();
+		return edgeHash.size();
 	}
 
 	/**
@@ -110,8 +109,8 @@ public class WUGraph {
 					// remove partner references on all nodes
 					// in the adjacency list
 					while (lNode.isValidNode()) {
-						if(lNode.item() != lNode) {
-							((DDListNode) lNode.item()).remove();
+						if (((Object[]) lNode.item())[0] != lNode) {
+							((DDListNode) ((Object[]) lNode.item())[0]).remove();
 						}
 						Object vertex2 = ((Object[]) lNode.item())[1];
 						VertexPair vp = new VertexPair(vertex, vertex2);
@@ -263,43 +262,43 @@ public class WUGraph {
 				if (isEdge(u, v)) {
 					DDListNode updated = findEdgeNode(u, v);
 					if (u != v) {
-						((DDListNode) ((Object[]) updated.item())[0]).setItem2(weight);
+						((DDListNode) ((Object[]) updated.item())[0])
+								.setItem2(weight);
 					}
 					updated.setItem2(weight);
 
 				} else {
-					
+
 					VertexPair newEdge = new VertexPair(u, v);
 					DDList vertex = (DDList) findVertexNode(u).item2();
-					
+
 					// if the vertices are referencing the same thing,
 					// assign partner reference as itself.
 					if (u == v) {
-						
+
 						// the first parameter is partner reference
 						vertex.insertBack(null, weight);
-						
+
 						Object[] partner = new Object[2];
 						partner[0] = vertex.back();
 						partner[1] = v;
-						
+
 						vertex.back().setItem(partner);
-						
-						
+
 					} else { // insert the edge in the other vertex.
 						DDList vertex2 = (DDList) findVertexNode(v).item2();
-						
+
 						vertex.insertBack(null, weight);
 						vertex2.insertBack(null, weight);
-						
+
 						Object[] partner = new Object[2];
 						partner[0] = vertex2.back();
 						partner[1] = v;
-						
+
 						Object[] partner2 = new Object[2];
 						partner[0] = vertex.back();
 						partner[1] = u;
-						
+
 						vertex.back().setItem(partner);
 						vertex2.back().setItem(partner2);
 					}
@@ -326,7 +325,7 @@ public class WUGraph {
 			if (isVertex(u) && isVertex(v) && isEdge(u, v)) {
 				DDListNode node = findEdgeNode(u, v);
 
-				((DDListNode) node.item()).remove();
+				((DDListNode) ((Object[]) node.item())[0]).remove();
 				if (node.isValidNode()) {
 					node.remove();
 				}
