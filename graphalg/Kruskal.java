@@ -49,6 +49,7 @@ public class Kruskal {
 		// Sort the list using quicksort to achieve O(|E|log(|E|))
 		ListSorts.mergeSort(list);
 
+
 		// Use HashTableChained to map objects that serve as Vertices to unique
 		// integers
 		//
