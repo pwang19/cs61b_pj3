@@ -109,11 +109,12 @@ public class WUGraph {
 					// remove partner references on all nodes
 					// in the adjacency list
 					while (lNode.isValidNode()) {
-						if (((Object[]) lNode.item())[0] != lNode) {
+
+						Object vertex2 = ((Object[]) lNode.item())[1];
+//						if (((Object[]) lNode.item())[0] != lNode) {
 							((DDListNode) ((Object[]) lNode.item())[0])
 									.remove();
-						}
-						Object vertex2 = ((Object[]) lNode.item())[1];
+//						}
 						VertexPair vp = new VertexPair(vertex, vertex2);
 						edgeHash.remove(vp);
 						lNode = (DDListNode) lNode.next();
