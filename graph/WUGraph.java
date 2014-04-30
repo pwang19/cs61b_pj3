@@ -160,9 +160,7 @@ public class WUGraph {
 			return list.length();
 
 		} catch (InvalidKeyException e) {
-			e.printStackTrace();
 		} catch (InvalidNodeException e) {
-			e.printStackTrace();
 		}
 
 		return 0;
