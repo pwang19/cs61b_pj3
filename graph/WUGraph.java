@@ -281,9 +281,12 @@ public class WUGraph {
 
 						// the first parameter is partner reference
 						vertex.insertBack(newEdge, weight);
+						vertex.back().setItem(vertex.back());
 					} else { // insert the edge in the other vertex.
 						vertex.insertBack(otherNewEdge, weight);
+						vertex.back().setItem(vertex2.back());
 						vertex2.insertBack(newEdge, weight);
+						vertex2.back().setItem(vertex.back());
 					}
 
 					edgeHash.insert(newEdge, vertex.back());
