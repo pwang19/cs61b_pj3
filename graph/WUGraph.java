@@ -19,8 +19,6 @@ public class WUGraph {
 	 */
 	private HashTableChained vertexHash;
 
-	private int verticesCount;
-	private int edgesCount;
 
 	/**
 	 * WUGraph() constructs a graph having no vertices or edges.
@@ -40,8 +38,7 @@ public class WUGraph {
 	 * Running time: O(1).
 	 */
 	public int vertexCount() {
-		return verticesCount;
-		// return vertices.length();
+		 return vertices.length();
 	}
 
 	/**
@@ -50,8 +47,7 @@ public class WUGraph {
 	 * Running time: O(1).
 	 */
 	public int edgeCount() {
-		return edgesCount;
-		// return edgeHash.size();
+		 return edgeHash.size();
 	}
 
 	/**
@@ -93,7 +89,6 @@ public class WUGraph {
 			DDList newList = new DDList();
 			vertices.insertBack(vertex, newList);
 			vertexHash.insert(vertex, vertices.back());
-			verticesCount++;
 		}
 	}
 
@@ -123,7 +118,6 @@ public class WUGraph {
 				// remove this vertex
 				vertexHash.remove(vertex);
 				node.remove();
-				verticesCount--;
 			} catch (InvalidKeyException e) {
 				e.printStackTrace();
 			} catch (InvalidNodeException e) {
@@ -261,18 +255,21 @@ public class WUGraph {
 	public void addEdge(Object u, Object v, int weight) {
 		if (isVertex(u) && isVertex(v)) {
 			try {
-				VertexPair newEdge = new VertexPair(u, v);
-				DDList vertex = (DDList) findVertexNode(u).item2();
-				VertexPair otherNewEdge = new VertexPair(v, u);
-				DDList vertex2 = (DDList) findVertexNode(v).item2();
-
 				// check if the edge exists
 				if (isEdge(u, v)) {
 					DDListNode updated = findEdgeNode(u, v);
-					((DDListNode) updated.item()).setItem2(weight);
+					if (u != v) {
+						((DDListNode) updated.item()).setItem2(weight);
+					}
 					updated.setItem2(weight);
 
 				} else {
+					
+					VertexPair newEdge = new VertexPair(u, v);
+					DDList vertex = (DDList) findVertexNode(u).item2();
+					VertexPair otherNewEdge = new VertexPair(v, u);
+					DDList vertex2 = (DDList) findVertexNode(v).item2();
+					
 					// if the vertices are referencing the same thing,
 					// assign partner reference as itself.
 					if (u == v) {
@@ -288,7 +285,6 @@ public class WUGraph {
 					}
 
 					edgeHash.insert(newEdge, vertex.back());
-					edgesCount++;
 				}
 			} catch (InvalidKeyException e) {
 				e.printStackTrace();
@@ -314,11 +310,10 @@ public class WUGraph {
 				if (node.isValidNode()) {
 					node.remove();
 				}
-				
+
 				VertexPair vp = new VertexPair(u, v);
 				edgeHash.remove(vp);
 			}
-			edgesCount--;
 		} catch (InvalidKeyException e) {
 			e.printStackTrace();
 		} catch (InvalidNodeException e) {
@@ -342,9 +337,8 @@ public class WUGraph {
 		} catch (InvalidKeyException e) {
 			return false;
 		} catch (InvalidNodeException e) {
-			e.printStackTrace();
+			return false;
 		}
-		return false;
 	}
 
 	/**
