@@ -263,7 +263,7 @@ public class WUGraph {
 				if (isEdge(u, v)) {
 					DDListNode updated = findEdgeNode(u, v);
 					if (u != v) {
-						((DDListNode) updated.item()).setItem2(weight);
+						((DDListNode) ((Object[]) updated.item())[0]).setItem2(weight);
 					}
 					updated.setItem2(weight);
 
@@ -289,21 +289,19 @@ public class WUGraph {
 					} else { // insert the edge in the other vertex.
 						DDList vertex2 = (DDList) findVertexNode(v).item2();
 						
-
-						
 						vertex.insertBack(null, weight);
 						vertex2.insertBack(null, weight);
 						
 						Object[] partner = new Object[2];
-						partner[0] = vertex.back();
+						partner[0] = vertex2.back();
 						partner[1] = v;
 						
 						Object[] partner2 = new Object[2];
-						partner[0] = vertex2.back();
+						partner[0] = vertex.back();
 						partner[1] = u;
 						
-						vertex.back().setItem(partner2);
-						vertex2.back().setItem(partner);
+						vertex.back().setItem(partner);
+						vertex2.back().setItem(partner2);
 					}
 
 					edgeHash.insert(newEdge, vertex.back());

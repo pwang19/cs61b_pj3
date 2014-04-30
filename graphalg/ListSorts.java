@@ -1,4 +1,5 @@
 /* ListSorts.java */
+package graphalg;
 
 import list.*;
 
@@ -23,7 +24,7 @@ public class ListSorts {
         que.enqueue(item);
         queofque.enqueue(que);
       }
-    }catch(QueEmptyException e){
+    }catch(QueueEmptyException e){
       System.out.println("Wrong queue. makeQueueOfQueues");
     }
     return queofque;
@@ -47,7 +48,7 @@ public class ListSorts {
       while(!q1.isEmpty() || !q2.isEmpty()){
         Comparable itemq1 = (Comparable) q1.front();
         Comparable itemq2 = (Comparable) q2.front();
-        int comparison = itemq1.compareTo(item.q2)
+        int comparison = itemq1.compareTo(itemq2);
         if(comparison>0){
           q3.enqueue(itemq2);
           q2.dequeue();
@@ -61,7 +62,7 @@ public class ListSorts {
       }else{
         q3.append(q1);
       }
-    }catch(QueEmptyException e){
+    }catch(QueueEmptyException e){
       System.out.println("Wrong queue. mergeSortedQueues");
     }
     return q3;
@@ -74,16 +75,16 @@ public class ListSorts {
    **/
   public static void mergeSort(LinkedQueue q) {
     // Your solution here.
-    LinkedQueue mergeQueofQue = q.makeQueueOfQueues();
+    LinkedQueue mergeQueofQue = ListSorts.makeQueueOfQueues(q);
     try{
       while(mergeQueofQue.size() > 1){
         LinkedQueue q1 = (LinkedQueue) mergeQueofQue.dequeue();
         LinkedQueue q2 = (LinkedQueue) mergeQueofQue.dequeue();
         LinkedQueue q3 = mergeSortedQueues(q1, q2);
-        q1.enqueue(q3);
+        mergeQueofQue.enqueue(q3);
       }
-      q.append()
-    }catch(QueEmptyException e){
+      q.append((LinkedQueue) mergeQueofQue.dequeue());
+    }catch(QueueEmptyException e){
       System.out.println("Wrong queue. merge");
     }
   }
