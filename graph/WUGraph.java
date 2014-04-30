@@ -226,7 +226,7 @@ public class WUGraph {
 	public Neighbors getNeighbors(Object vertex) {
 		Neighbors n = new Neighbors();
 		try {
-			DDList list = (DDList) findVertexNode(vertex).item();
+			DDList list = (DDList) findVertexNode(vertex).item2();
 			DDListNode node = (DDListNode) list.front();
 			n.neighborList = new Object[list.length()];
 			n.weightList = new int[list.length()];
@@ -258,9 +258,9 @@ public class WUGraph {
 		if (isVertex(u) && isVertex(v)) {
 			try {
 				VertexPair newEdge = new VertexPair(u, v);
-				DDList vertex = (DDList) findVertexNode(u).item();
+				DDList vertex = (DDList) findVertexNode(u).item2();
 				VertexPair otherNewEdge = new VertexPair(v, u);
-				DDList vertex2 = (DDList) findVertexNode(v).item();
+				DDList vertex2 = (DDList) findVertexNode(v).item2();
 
 				// check if the edge exists
 				if (isEdge(u, v)) {
