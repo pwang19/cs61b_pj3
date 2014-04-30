@@ -110,14 +110,12 @@ public class WUGraph {
 					// in the adjacency list
 					while (lNode.isValidNode()) {
 						Object vertex2 = ((Object[]) lNode.item())[1];
-						lNode = (DDListNode) lNode.next();
-						removeEdge(vertex, vertex2);
-////						if (((Object[]) lNode.item())[0] != lNode) {
-//							((DDListNode) ((Object[]) lNode.item())[0])
-//									.remove();
-////						}
-//						VertexPair vp = new VertexPair(vertex, vertex2);
-//						edgeHash.remove(vp);
+						if(vertex2 != null) {
+							lNode = (DDListNode) lNode.next();
+							removeEdge(vertex, vertex2);
+						} else {
+							lNode = (DDListNode) lNode.next();
+						}
 					}
 				}
 				// remove this vertex
