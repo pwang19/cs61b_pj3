@@ -265,7 +265,7 @@ public class WUGraph {
 				// check if the edge exists
 				if (isEdge(u, v)) {
 					DDListNode updated = findEdgeNode(u, v);
-					updated.item.item2() = weight;
+					(updated.item()).item2() = weight;
 					updated.item2() = weight;
 
 					// DDListNode temp = (DDListNode) vertex.front();
@@ -309,7 +309,7 @@ public class WUGraph {
 			if (isVertex(u) && isVertex(v) && isEdge(u, v)) {
 				DDListNode node = findEdgeNode(u, v);
 
-				node.item.remove();
+				(node.item()).remove();
 				if (node.isValidNode()) {
 					node.remove();
 				}
