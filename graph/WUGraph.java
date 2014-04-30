@@ -19,6 +19,9 @@ public class WUGraph {
 	 */
 	private HashTableChained vertexHash;
 
+	private int verticesCount;
+	private int edgesCount;
+
 	/**
 	 * WUGraph() constructs a graph having no vertices or edges.
 	 *
@@ -37,7 +40,8 @@ public class WUGraph {
 	 * Running time: O(1).
 	 */
 	public int vertexCount() {
-		return vertices.length();
+		return verticesCount;
+		//return vertices.length();
 	}
 
 	/**
@@ -46,7 +50,8 @@ public class WUGraph {
 	 * Running time: O(1).
 	 */
 	public int edgeCount() {
-		return edgeHash.size();
+		return edgesCount;
+		//return edgeHash.size();
 	}
 
 	/**
@@ -88,6 +93,7 @@ public class WUGraph {
 			DDList newList = new DDList();
 			vertices.insertBack(vertex, newList);
 			vertexHash.insert(vertex, vertices.back());
+			verticesCount++;
 		}
 	}
 
@@ -117,7 +123,7 @@ public class WUGraph {
 				// remove this vertex
 				vertexHash.remove(vertex);
 				node.remove();
-
+				verticesCount--;
 			} catch (InvalidKeyException e) {
 				e.printStackTrace();
 			} catch (InvalidNodeException e) {
@@ -281,6 +287,7 @@ public class WUGraph {
 					}
 
 					edgeHash.insert(newEdge, vertex.back());
+					edgesCount++;
 				}
 			} catch (InvalidKeyException e) {
 				e.printStackTrace();
@@ -308,6 +315,7 @@ public class WUGraph {
 				}
 				edgeHash.remove(node);
 			}
+			edgesCount--;
 		} catch (InvalidKeyException e) {
 			e.printStackTrace();
 		} catch (InvalidNodeException e) {
