@@ -110,12 +110,10 @@ public class WUGraph {
 					// in the adjacency list
 					while (lNode.isValidNode()) {
 						Object vertex2 = ((Object[]) lNode.item())[1];
+						lNode = (DDListNode) lNode.next();
 						if(vertex2 != null) {
-							lNode = (DDListNode) lNode.next();
 							removeEdge(vertex, vertex2);
-						} else {
-							lNode = (DDListNode) lNode.next();
-						}
+						} 
 					}
 				}
 				// remove this vertex
