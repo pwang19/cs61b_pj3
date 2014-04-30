@@ -5,7 +5,7 @@ package graphalg;
 import graph.*;
 import set.*;
 
-public class KruskalHelper{
+public class KruskalHelper implements Comparable{
 	private Object vertex1;
 	private Object vertex2;
 	private int weight;
@@ -52,6 +52,12 @@ public class KruskalHelper{
 	*/
 	public int getWeight(){
 		return weight;
+	}
+
+	@Override
+	public int compareTo(Object i) {
+		// TODO Auto-generated method stub
+		return weight - ((KruskalHelper)i).getWeight();
 	}
 
 }

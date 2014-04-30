@@ -8,7 +8,7 @@ package list;
 */
 
 
-class NewListNode extends ListNode{
+class NewListNode {
 	protected Object o;
 	protected NewListNode next;
 
@@ -18,14 +18,8 @@ class NewListNode extends ListNode{
 		next = null;
 	}
 
-	NewListNode(Object i, NewListNode next){
-		this.o = obj;
+	NewListNode(Object o, NewListNode next){
+		this.o = o;
 		this.next = next;
-	}
-
-	NewListNode(Object i, SList l, NewListNode n) {
-		item = i;
-		myList = l;
-		next = n;
 	}
 }
