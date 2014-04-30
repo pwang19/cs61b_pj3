@@ -41,7 +41,7 @@ public class WUGraph {
 	 */
 	public int vertexCount() {
 		return verticesCount;
-		//return vertices.length();
+		// return vertices.length();
 	}
 
 	/**
@@ -51,7 +51,7 @@ public class WUGraph {
 	 */
 	public int edgeCount() {
 		return edgesCount;
-		//return edgeHash.size();
+		// return edgeHash.size();
 	}
 
 	/**
@@ -181,8 +181,8 @@ public class WUGraph {
 	 * @throws InvalidKeyException
 	 * @throws InvalidNodeException
 	 */
-	private DDListNode findVertexNode(Object vertex) throws InvalidKeyException,
-			InvalidNodeException {
+	private DDListNode findVertexNode(Object vertex)
+			throws InvalidKeyException, InvalidNodeException {
 		return (DDListNode) vertexHash.find(vertex).value();
 	}
 
@@ -226,16 +226,20 @@ public class WUGraph {
 	public Neighbors getNeighbors(Object vertex) {
 		Neighbors n = new Neighbors();
 		try {
-			DDList list = (DDList) findVertexNode(vertex).item2();
-			DDListNode node = (DDListNode) list.front();
-			n.neighborList = new Object[list.length()];
-			n.weightList = new int[list.length()];
-			int index = 0;
-			while (node.isValidNode()) {
-				n.neighborList[index] = node.item();
-				n.weightList[index] = (Integer) node.item2();
-				index++;
-				node = (DDListNode) node.next();
+			if (degree(vertex) == 0 || !isVertex(vertex)) {
+				return null;
+			} else {
+				DDList list = (DDList) findVertexNode(vertex).item2();
+				DDListNode node = (DDListNode) list.front();
+				n.neighborList = new Object[list.length()];
+				n.weightList = new int[list.length()];
+				int index = 0;
+				while (node.isValidNode()) {
+					n.neighborList[index] = node.item();
+					n.weightList[index] = (Integer) node.item2();
+					index++;
+					node = (DDListNode) node.next();
+				}
 			}
 		} catch (InvalidNodeException e) {
 			e.printStackTrace();
@@ -268,12 +272,6 @@ public class WUGraph {
 					((DDListNode) updated.item()).setItem2(weight);
 					updated.setItem2(weight);
 
-					// DDListNode temp = (DDListNode) vertex.front();
-					// while (temp.isValidNode()) {
-					// if(temp.equals()) {
-					//
-					// }
-					// }
 				} else {
 					// if the vertices are referencing the same thing,
 					// assign partner reference as itself.
@@ -403,9 +401,9 @@ public class WUGraph {
 		graph.removeVertex("not a vertex");
 		System.out.println(graph.vertexCount());
 		System.out.println(graph.arrayToString(graph.getVertices()));
-//		graph.addEdge("bob", 70, 5);
-//
-//		System.out.println(graph.arrayToString(graph.getVertices()));
+		// graph.addEdge("bob", 70, 5);
+		//
+		// System.out.println(graph.arrayToString(graph.getVertices()));
 	}
 
 }
