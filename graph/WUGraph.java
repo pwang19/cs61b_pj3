@@ -282,8 +282,8 @@ public class WUGraph {
 						vertex.back().setItem(vertex.back());
 					} else { // insert the edge in the other vertex.
 						vertex.insertBack(otherNewEdge, weight);
-						vertex.back().setItem(vertex2.back());
 						vertex2.insertBack(newEdge, weight);
+						vertex.back().setItem(vertex2.back());
 						vertex2.back().setItem(vertex.back());
 					}
 
@@ -314,7 +314,9 @@ public class WUGraph {
 				if (node.isValidNode()) {
 					node.remove();
 				}
-				edgeHash.remove(node);
+				
+				VertexPair vp = new VertexPair(u, v);
+				edgeHash.remove(vp);
 			}
 			edgesCount--;
 		} catch (InvalidKeyException e) {
@@ -371,39 +373,6 @@ public class WUGraph {
 			}
 		}
 		return 0;
-	}
-
-	/**
-	 * arrayToString() converts an array to a readable string. Usage: for
-	 * debugging purposes.
-	 * 
-	 * @param arr
-	 * @return a string representation of arr
-	 */
-	public String arrayToString(Object[] arr) {
-		String s = "[";
-		for (Object o : arr) {
-			s += o.toString() + ", ";
-		}
-		s += "]";
-		return s;
-	}
-
-	public static void main(String[] args) {
-		WUGraph graph = new WUGraph();
-		graph.addVertex("bob");
-		graph.addVertex(70);
-		graph.addVertex(false);
-		graph.addVertex("not a vertex");
-		System.out.println(graph.vertexCount());
-		System.out.println(graph.arrayToString(graph.getVertices()));
-		graph.removeVertex("bob");
-		graph.removeVertex("not a vertex");
-		System.out.println(graph.vertexCount());
-		System.out.println(graph.arrayToString(graph.getVertices()));
-		// graph.addEdge("bob", 70, 5);
-		//
-		// System.out.println(graph.arrayToString(graph.getVertices()));
 	}
 
 }
