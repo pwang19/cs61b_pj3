@@ -38,9 +38,9 @@ public class Kruskal {
 
     // Store all edges from g into a LinkedQueue using getNeighbors()
   	for(int i = 0; i < size; i++){
-  		Neighbors vert = getNeighbors(vertices[i]);
+  		Neighbors vert = g.getNeighbors(vertices[i]);
       if(vert != null){
-        if(vert.neighborList.length != n.weightList.length){
+        if(vert.neighborList.length != vert.weightList.length){
           return null;
         }
     		for(int k = 0; k < vert.length; k++){
