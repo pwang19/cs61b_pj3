@@ -24,13 +24,13 @@ public class Kruskal {
    */
   public static WUGraph minSpanTree(WUGraph g){
     // new graph to store minSpanTree
-  	WUGraph t = new WUGraph();
+  	WUGraph T = new WUGraph();
   	Object[] vertices = g.getVertices();
   	int size = vertices.length;
 
     // store vertexes from g to t
   	for(int i = 0; i < size; i++){   
-  		t.addVertex(vertices[i]);
+  		T.addVertex(vertices[i]);
   	}
 
     // Use LinkedQueue so we can sort using sorting algorithms from hw.
@@ -63,7 +63,7 @@ public class Kruskal {
     // Use DisjointSets to make sure no cycle 
   	DisjointSets cycleCheck = new DisjointSets(size);
 
-    // get vertex values in hash and find its root in disjointset to check if two vertices have same root. If not the same root, add edge and union the two vertices.
+    // get vertex values in hash and find its root in disjointset to check if two vertices have same root. If not the same root, add edge to t and union the two vertices.
     try{
     	while(!list.isEmpty()){
     		KruskalHelper temp = (KruskalHelper) list.dequeue();
@@ -74,13 +74,13 @@ public class Kruskal {
         int vertex2Root = (int) cycleCheck.find(vertex2);
     		if(vertex1Root != vertex2Root){
           cycleCheck.union(vertex1, vertex2);
-          t.addEdge(vertex1, vertex2, temp.getWeight());
+          T.addEdge(vertex1, vertex2, temp.getWeight());
         } 
     	}
     }catch(QueEmptyException e){
       System.out.println("Wrong queue. minSpanTree");
     }
-    return t;
+    return T;
   }
 =======
 	/**
