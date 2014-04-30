@@ -289,12 +289,12 @@ public class WUGraph {
 						vertex2.insertBack(null, weight);
 
 						Object[] partner = new Object[2];
-						partner[0] = vertex.back();
-						partner[1] = u;
-
-						Object[] partner2 = new Object[2];
 						partner[0] = vertex2.back();
 						partner[1] = v;
+
+						Object[] partner2 = new Object[2];
+						partner2[0] = vertex.back();
+						partner2[1] = u;
 
 						vertex.back().setItem(partner);
 						vertex2.back().setItem(partner2);
