@@ -110,7 +110,8 @@ public class WUGraph {
 					// in the adjacency list
 					while (lNode.isValidNode()) {
 						if (((Object[]) lNode.item())[0] != lNode) {
-							((DDListNode) ((Object[]) lNode.item())[0]).remove();
+							((DDListNode) ((Object[]) lNode.item())[0])
+									.remove();
 						}
 						Object vertex2 = ((Object[]) lNode.item())[1];
 						VertexPair vp = new VertexPair(vertex, vertex2);
@@ -172,7 +173,7 @@ public class WUGraph {
 
 	/**
 	 * findVertexNode() finds the input vertex's corresponding node in vertices
-	 * 
+	 *
 	 * @param vertex
 	 * @return the adjacency list associated with this vertex
 	 * @throws InvalidKeyException
@@ -187,7 +188,7 @@ public class WUGraph {
 	 * findEdgeNode() finds the edge associated with the vertices indicated, if
 	 * it exists. Checks the edgeHash for the edge; will throw exception if it
 	 * is not found.
-	 * 
+	 *
 	 * @param u
 	 *            first vertex
 	 * @param v
@@ -232,7 +233,7 @@ public class WUGraph {
 				n.weightList = new int[list.length()];
 				int index = 0;
 				while (node.isValidNode()) {
-					n.neighborList[index] = node.item();
+					n.neighborList[index] = ((Object[]) node.item())[1];
 					n.weightList[index] = (Integer) node.item2();
 					index++;
 					node = (DDListNode) node.next();
@@ -268,7 +269,6 @@ public class WUGraph {
 					updated.setItem2(weight);
 
 				} else {
-
 					VertexPair newEdge = new VertexPair(u, v);
 					DDList vertex = (DDList) findVertexNode(u).item2();
 
@@ -293,11 +293,11 @@ public class WUGraph {
 
 						Object[] partner = new Object[2];
 						partner[0] = vertex2.back();
-						partner[1] = v;
+						partner[1] = u;
 
 						Object[] partner2 = new Object[2];
 						partner[0] = vertex.back();
-						partner[1] = u;
+						partner[1] = v;
 
 						vertex.back().setItem(partner);
 						vertex2.back().setItem(partner2);
@@ -324,8 +324,9 @@ public class WUGraph {
 		try {
 			if (isVertex(u) && isVertex(v) && isEdge(u, v)) {
 				DDListNode node = findEdgeNode(u, v);
-
-				((DDListNode) ((Object[]) node.item())[0]).remove();
+				DDListNode partner = ((DDListNode) ((Object[]) node.item())[0]);
+				partner.remove();
+				
 				if (node.isValidNode()) {
 					node.remove();
 				}
